@@ -8,12 +8,12 @@ from selenium.webdriver.common.keys import Keys
 
 
 # Pega os valores do arquivo de texto de login
-file = open('login.txt','r')
+file = open('login.txt', 'r')
 read = file.read()
 inputlist = read.split('\n')
 
 # Parametros de login
-inputcpf =  inputlist[0]   
+inputcpf = inputlist[0]
 inputpassword = inputlist[1]
 
 # Abre o driver e entra na minerva
@@ -33,8 +33,9 @@ idcpf.send_keys(inputcpf)
 password.send_keys(inputpassword, Keys.RETURN)
 
 # Acha o botao de fechar o popup e o fecha
-driver.implicitly_wait(10) # Aguarda o modal dialog estar disponivel
-popup = driver.find_element_by_css_selector('.modal-footer > button[data-dismiss="modal"]')
+driver.implicitly_wait(10)  # Aguarda o modal dialog estar disponivel
+popup = driver.find_element_by_css_selector(
+    '.modal-footer > button[data-dismiss="modal"]')
 popup.send_keys(Keys.RETURN)
 
 # Acha a secao emprestimos e o acessa
