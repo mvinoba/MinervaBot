@@ -5,6 +5,7 @@ Escrito por Vinicius Figueiredo pela primeira vez em 06/2016, usando uma ideia d
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
 
 
 # Pega os valores do arquivo de texto de login
@@ -16,8 +17,12 @@ inputlist = read.split('\n')
 inputcpf = inputlist[0]
 inputpassword = inputlist[1]
 
+# Coloca o Chrome em modo headless
+options = Options()
+options.add_argument('--headless')
+
 # Abre o driver e entra na minerva
-driver = webdriver.Chrome()
+driver = webdriver.Chrome(chrome_options=options)
 driver.get('http://minerva.ufrj.br')
 
 # Acha a secao de login e a acessa
