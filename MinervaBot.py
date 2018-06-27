@@ -50,3 +50,13 @@ emprestimos.send_keys(Keys.RETURN)
 # Clica em renovar todos
 renovartodos = driver.find_element_by_partial_link_text("Renovar Todos")
 renovartodos.send_keys(Keys.RETURN)
+
+# Imprime na tela o resultado da renovacao
+tabela = driver.find_elements_by_tag_name('table')[-1]
+linhas = tabela.find_elements_by_tag_name('tr')
+cabecalho = linhas[0].find_elements_by_tag_name('th')
+for livro in linhas[1:]:
+  corpo = livro.find_elements_by_tag_name('td')
+  for x in range(len(corpo)):
+    print(cabecalho[x].get_attribute('innerText'), end=': ')
+    print(corpo[x].get_attribute('innerText').strip())
