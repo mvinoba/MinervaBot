@@ -51,7 +51,7 @@ tabela = driver.find_elements_by_tag_name('table')[-1]
 linhas = tabela.find_elements_by_tag_name('tr')
 cabecalho = linhas[0].find_elements_by_tag_name('th')
 for livro in linhas[1:]:
-  corpo = livro.find_elements_by_tag_name('td')
-  for x in range(len(corpo)):
-    print(cabecalho[x].get_attribute('innerText'), end=': ')
-    print(corpo[x].get_attribute('innerText').strip())
+    corpo = livro.find_elements_by_tag_name('td')
+    for x in range(len(corpo)):
+        print(cabecalho[x].get_attribute('innerText'), end=': ')
+        print(corpo[x].get_attribute('innerText').strip())
