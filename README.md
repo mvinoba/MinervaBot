@@ -8,7 +8,7 @@ Caso tenha preferência por usar a versão executável, que não requer nem o Py
 ## Requerimentos
 * Python 3.5
 * Selenium (Testado com a versão mais recente: 3.4.1)
-* ChromeDriver 2.29
+* ChromeDriver 2.32
 
 ## Uso
 
