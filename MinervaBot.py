@@ -1,8 +1,3 @@
-'''
-Este programa automatiza o processo de renovacao dos livros no site da Minerva
-Escrito por Vinicius Figueiredo pela primeira vez em 06/2016, usando uma ideia de Matheus Bernini, a quem agradeco!
-'''
-
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
