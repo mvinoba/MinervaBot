@@ -39,11 +39,11 @@ popup = driver.find_element_by_css_selector(
 popup.send_keys(Keys.RETURN)
 
 # Acha a secao emprestimos e o acessa
-emprestimos = driver.find_element_by_css_selector("a[href*='bor-loan']")
+emprestimos = driver.find_element_by_css_selector('a[href*="bor-loan"]')
 emprestimos.send_keys(Keys.RETURN)
 
 # Clica em renovar todos
-renovartodos = driver.find_element_by_partial_link_text("Renovar Todos")
+renovartodos = driver.find_element_by_partial_link_text('Renovar Todos')
 renovartodos.send_keys(Keys.RETURN)
 
 # Imprime na tela o resultado da renovacao
