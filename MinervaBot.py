@@ -1,6 +1,10 @@
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 # Pega os valores do arquivo de texto de login
@@ -33,10 +37,16 @@ idcpf.send_keys(inputcpf)
 password.send_keys(inputpassword, Keys.RETURN)
 
 # Acha o botao de fechar o popup e o fecha
-driver.implicitly_wait(10)  # Aguarda o modal dialog estar disponivel
-popup = driver.find_element_by_css_selector(
-    '.modal-footer > button[data-dismiss="modal"]')
-popup.send_keys(Keys.RETURN)
+try:
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, 'myModal'))
+    ) # Aguarda o popup estar disponivel
+except TimeoutException:
+    pass
+else:
+    popup = driver.find_element_by_css_selector(
+        '.modal-footer > button[data-dismiss="modal"]')
+    popup.send_keys(Keys.RETURN)
 
 # Acha a secao emprestimos e o acessa
 emprestimos = driver.find_element_by_css_selector('a[href*="bor-loan"]')
