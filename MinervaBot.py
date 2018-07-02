@@ -1,3 +1,4 @@
+from getpass import getpass
 from selenium import webdriver
 from selenium.common import exceptions
 from selenium.webdriver.common.by import By
@@ -7,14 +8,36 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-# Pega os valores do arquivo de texto de login
-file = open('login.txt', 'r')
-read = file.read()
-inputlist = read.split('\n')
+def inserir_dados(salvar=None):
+    # Pergunta ao usuario CPF e senha
+    for label in driver.find_elements_by_tag_name('label'):
+        if label.get_attribute('for') == 'pat_id':
+            idcpf = driver.find_element_by_name('bor_id')
+            inputcpf = input('%s ' % label.text)
+        elif label.get_attribute('for') == 'pat_password':
+            inputpassword = getpass('%s ' % label.text)
 
-# Parametros de login
-inputcpf = inputlist[0]
-inputpassword = inputlist[1]
+    # Pergunta ao usuario se deseja salvar os dados de login
+    if salvar == None:
+        resposta = input('Salvar dados em arquivo? (s/N) ')
+        if resposta.lower() in {'sim', 's'}:
+            salvar = True
+        else:
+            salvar = False
+
+    print()
+    return inputcpf, inputpassword, salvar
+
+def ler_dados(arquivo):
+    file = open(arquivo, 'r')
+    read = file.read()
+    inputlist = read.split('\n')
+    return inputlist[0], inputlist[1]
+
+def salvar_dados(arquivo, inputcpf, inputpassword, salvar):
+    if not salvar: return
+    file = open(arquivo, 'w')
+    file.write('%s\n%s' % (inputcpf, inputpassword))
 
 # Coloca o Chrome em modo headless
 options = Options()
@@ -28,13 +51,36 @@ driver.get('http://minerva.ufrj.br')
 login = driver.find_element_by_link_text('Login')
 login.send_keys(Keys.RETURN)
 
-# Acha as entradas para o id e senha
-idcpf = driver.find_element_by_name('bor_id')
-password = driver.find_element_by_name('bor_verification')
+# Le os dados para login
+try:
+    inputcpf, inputpassword = ler_dados('login.txt')
+    salvar = True
+except FileNotFoundError:
+    print("Falha ao encontrar o arquivo de login")
+    inputcpf, inputpassword, salvar = inserir_dados(None)
+except IndexError:
+    print("Arquivo de login incompleto")
+    inputcpf, inputpassword, salvar = inserir_dados(True)
 
-# Preenche as entradas com os parametros dados
-idcpf.send_keys(inputcpf)
-password.send_keys(inputpassword, Keys.RETURN)
+# Entra em loop ate obter sucesso no login
+while True:
+    # Acha as entradas para o id e senha
+    idcpf = driver.find_element_by_name('bor_id')
+    password = driver.find_element_by_name('bor_verification')
+
+    # Preenche as entradas com os parametros dados
+    idcpf.clear()
+    idcpf.send_keys(inputcpf)
+    password.send_keys(inputpassword, Keys.RETURN)
+
+    # Checa mensagem de erro no login
+    feedback = driver.find_element_by_class_name('feedbackbar')
+    if feedback.text == ' ':
+        salvar_dados('login.txt', inputcpf, inputpassword, salvar)
+        break
+    else:
+        print(feedback.text.strip())
+        inputcpf, inputpassword, salvar = inserir_dados(salvar)
 
 # Acha o botao de fechar o popup e o fecha
 try:

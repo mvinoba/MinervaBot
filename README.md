@@ -12,17 +12,6 @@ Caso tenha preferência por usar a versão executável, que não requer nem o Py
 
 ## Uso
 
-Depois de instalar os requerimentos ou fazer o download do executável o próximo passo é editar o arquivo **teste.txt** e substituir `CPF` pelo seu CPF e `Senha` pela sua senha na http://minerva.ufrj.br.
-Ou seja, de:
-
-    CPF
-    Senha
-    
-Para:
-
-    12345678900
-    minhaSenha
-    
-Agora basta executar o MinervaBot.py
+Depois de instalar os requerimentos ou fazer o download do executável, basta executar o MinervaBot.py para configurar os dados de login
 
     python MinervaBot.py
