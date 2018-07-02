@@ -1,5 +1,5 @@
 from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
+from selenium.common import exceptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
@@ -41,7 +41,7 @@ try:
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, 'myModal'))
     ) # Aguarda o popup estar disponivel
-except TimeoutException:
+except exceptions.TimeoutException:
     pass
 else:
     popup = driver.find_element_by_css_selector(
@@ -52,18 +52,24 @@ else:
 emprestimos = driver.find_element_by_css_selector('a[href*="bor-loan"]')
 emprestimos.send_keys(Keys.RETURN)
 
-# Clica em renovar todos
-renovartodos = driver.find_element_by_partial_link_text('Renovar Todos')
-renovartodos.send_keys(Keys.RETURN)
+# Acha o botao de renovar todos
+try:
+    renovartodos = driver.find_element_by_partial_link_text('Renovar Todos')
+except exceptions.NoSuchElementException:
+    mensagem = driver.find_element_by_class_name('text3')
+    print(mensagem.text)
+else:
+    # Clica em renovar todos
+    renovartodos.send_keys(Keys.RETURN)
 
-# Imprime na tela o resultado da renovacao
-tabela = driver.find_elements_by_tag_name('table')[-1]
-linhas = tabela.find_elements_by_tag_name('tr')
-cabecalho = linhas[0].find_elements_by_tag_name('th')
-for livro in linhas[1:]:
-    corpo = livro.find_elements_by_tag_name('td')
-    for x in range(len(corpo)):
-        print(cabecalho[x].text, end=': ')
-        print(corpo[x].text)
+    # Imprime na tela o resultado da renovacao
+    tabela = driver.find_elements_by_tag_name('table')[-1]
+    linhas = tabela.find_elements_by_tag_name('tr')
+    cabecalho = linhas[0].find_elements_by_tag_name('th')
+    for livro in linhas[1:]:
+        corpo = livro.find_elements_by_tag_name('td')
+        for x in range(len(corpo)):
+            print(cabecalho[x].text, end=': ')
+            print(corpo[x].text)
 
 driver.quit()
