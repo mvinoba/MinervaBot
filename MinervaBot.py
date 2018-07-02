@@ -65,3 +65,5 @@ for livro in linhas[1:]:
     for x in range(len(corpo)):
         print(cabecalho[x].text, end=': ')
         print(corpo[x].text)
+
+driver.quit()
