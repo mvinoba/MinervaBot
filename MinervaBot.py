@@ -18,7 +18,7 @@ inputpassword = inputlist[1]
 
 # Coloca o Chrome em modo headless
 options = Options()
-options.add_argument('--headless')
+options.set_headless(True)
 
 # Abre o driver e entra na minerva
 driver = webdriver.Chrome(chrome_options=options)
@@ -48,7 +48,7 @@ else:
         '.modal-footer > button[data-dismiss="modal"]')
     popup.send_keys(Keys.RETURN)
 
-# Acha a secao emprestimos e o acessa
+# Acha a secao emprestimos e a acessa
 emprestimos = driver.find_element_by_css_selector('a[href*="bor-loan"]')
 emprestimos.send_keys(Keys.RETURN)
 
@@ -63,5 +63,5 @@ cabecalho = linhas[0].find_elements_by_tag_name('th')
 for livro in linhas[1:]:
     corpo = livro.find_elements_by_tag_name('td')
     for x in range(len(corpo)):
-        print(cabecalho[x].get_attribute('innerText'), end=': ')
-        print(corpo[x].get_attribute('innerText').strip())
+        print(cabecalho[x].text, end=': ')
+        print(corpo[x].text)
