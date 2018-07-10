@@ -3,7 +3,7 @@ Um bot que usa *Selenium* para automatizar a renovação online de livros das bi
 
 ## Requerimentos
 * Python 3.5
-* Selenium (Testado com a versão mais recente: 3.4.1)
+* Selenium - Testado com a versão mais recente: 3.4.1 - (`pip install selenium==3.4.1`)
 * ChromeDriver 2.32
 
 ## Uso
