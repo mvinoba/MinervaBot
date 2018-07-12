@@ -4,10 +4,10 @@ Um bot que usa *Selenium* para automatizar a renovação online de livros das bi
 ## Requerimentos
 * Python 3.5
 * Selenium - Testado com a versão mais recente: 3.4.1 - (`pip install selenium==3.4.1`)
-* ChromeDriver 2.32
+* [ChromeDriver - Testado com a versão 2.32](https://sites.google.com/a/chromium.org/chromedriver/downloads)
 
 ## Uso
 
-Depois de instalar os requerimentos ou fazer o download do executável, basta executar o MinervaBot.py para configurar os dados de login
+Depois de instalar os requerimentos basta executar o `MinervaBot.py` para configurar os dados de login:
 
     python MinervaBot.py
